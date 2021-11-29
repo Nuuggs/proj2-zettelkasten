@@ -28,5 +28,5 @@ CREATE TABLE IF NOT EXISTS notes_tags (
 
 CREATE TABLE IF NOT EXISTS tags (
   id SERIAL PRIMARY KEY,
-  tag_name TEXT
+  tag_name TEXT UNIQUE
 );

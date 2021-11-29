@@ -190,25 +190,63 @@ export const postNoteForm = (req, res) => {
   const inputTag = req.body.tag;
   const inputContent = req.body.content;
   const inputLink = req.body.link;
-
-  const queryArr = [noteUserId, inputIdentifier, inputTitle, inputContent];
   
-  const sqlQuery = "INSERT INTO notes (user_id, identifier, title, content) VALUES ($1, $2, $3, $4) RETURNING id";
-  pool.query(sqlQuery, queryArr, (insertQueryError, insertQueryResult) => {
-    if ( insertQueryError ) {
-      if ( insertQueryError.code === '23505') {
-        console.log(insertQueryError);
-        res.status(400).send('Sorry the identifier you chose has been used before, please try again with a different identifier<br> If issue persists, please contact support.<br><br><a href="/note">Back</a>');
-        return;
-      }
-      console.error('Insert Query Error', insertQueryError);
-      res.status(400).send('Sorry an error was detected, please try again\n If issue persists, please contact support.<br><br><a href="/note">Try again</a>');
-      return;
+  const queryArr = [noteUserId, inputIdentifier, inputTitle, inputContent];
+  // Variables to store note and tag id
+  let noteId = 0;
+  let tagId = 0;
+  // Functionality for tags and links - positioned here because below has redirect. Can refactor in future.
+  // Tag insert
+  pool
+  .query("INSERT INTO notes (user_id, identifier, title, content) VALUES ($1, $2, $3, $4) RETURNING id", queryArr)
+  .then((result) => {
+    noteId = result.rows[0].id;
+    console.log('note id: ', noteId);
+    return pool.query(`SELECT id FROM tags WHERE tag_name='${inputTag}'`);
+  })
+  .then((result) => {
+    console.log('select test result: ', result.rows[0]);
+    if ( result.rows[0] === undefined ) {
+      return pool.query(`INSERT INTO tags (tag_name) VALUES ('${inputTag}') RETURNING id`);
     }
-    console.log(insertQueryResult.rows[0].id);
-    res.redirect(`/note/${insertQueryResult.rows[0].id}`);
-
+    else {
+      return pool.query(`SELECT id FROM tags WHERE tag_name='${inputTag}'`);
+    }
+  })  
+  .then((result) => {
+    tagId = result.rows[0].id;
+    console.log('tag id:', tagId);
+    return pool.query(`INSERT INTO notes_tags (note_id, tag_id) VALUES ('${noteId}', '${tagId}') RETURNING *`);
+  })
+  .then((result) => {
+    console.log('note created: ', result.rows[0]);
+    res.redirect(`/note/${result.rows[0].note_id}`);
+  })
+  .catch((error) => {
+    console.log('error found', error);
+    if ( error.code === '23505' && error.table === 'tags' ) {    
+    }
   });
+
+  // Link insert
+
+
+
+  // pool.query(sqlQuery, queryArr, (insertQueryError, insertQueryResult) => {
+  //   console.log('inserting note');
+  //   if ( insertQueryError ) {
+  //     if ( insertQueryError.code === '23505') {
+  //       console.log(insertQueryError);
+  //       res.status(400).send('Sorry the identifier you chose has been used before, please try again with a different identifier<br> If issue persists, please contact support.<br><br><a href="/note">Back</a>');
+  //       return;
+  //     }
+  //     console.error('Insert Query Error', insertQueryError);
+  //     res.status(400).send('Sorry an error was detected, please try again\n If issue persists, please contact support.<br><br><a href="/note">Try again</a>');
+  //     return;
+  //   }
+  //   console.log(insertQueryResult.rows[0].id);
+
+  // });
 };
 
 export const getNote = (req, res) => {
@@ -244,18 +282,22 @@ export const postNote = (req, res) => {
   const inputContent = req.body.content;
   const inputLink = req.body.link;
   
-  const sqlQuery = `UPDATE notes SET identifier='${inputIdentifier}', title='${inputTitle}', content='${inputContent}' WHERE id=${noteId}`;
-  console.log(sqlQuery);
+  const sqlQuery = `UPDATE notes SET identifier='${inputIdentifier}', title='${inputTitle}', content='${inputContent}' WHERE id=${noteId} RETURNING *`;
 
-  pool.query(sqlQuery, (updateQueryError, updateQueryResult) => {
-    if( updateQueryError ) {
-      console.error('Update Query Error: ', updateQueryError);
-      return;
-    }
-    console.log('edit worked')
-    res.redirect(`/note/${req.body.note_id}`);
-  });
-};
+  pool
+  .query(sqlQuery)
+  .then((result) => {
+    console.log('edit worked');
+    console.log(result.rows[0]);    
+
+    return pool.query(`SELECT * FROM tags WHERE tag_name=${inputTag}`);
+  })
+  .then((result) => {
+    console.log('tag', result);
+  })
+  // .then(result) => {res.redirect(`/note/${req.body.note_id}`)};
+  .catch((error) => console.error(error.stack));
+}
 
 export const deleteNote = (req, res) => {
   const {index} = req.params;
