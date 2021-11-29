@@ -1,0 +1,21 @@
+<%- include('header'); -%>
+
+  <div class="container">
+    <div class="row"><h1>display random quote?</h1></div>
+
+    <div class="row">
+      <form action="/note" method="POST">
+        <input type="text" id="identifier" name="identifier" placeholder="Identifier(required)" required /><br>
+        <input type="text" id="title" name="title" placeholder="Title (required)" required /><br>
+        <textarea id="content" name="content" placeholder="content" rows=12 cols=60></textarea><br>
+        <input type="text" id="tags" name="tags" placeholder="Tags" /><br>
+        <input type="text" id="links" name="links" placeholder="links" /><br><br>
+        <input type="submit" value="Create!" />
+      </form>
+    </div>
+    <br>
+    <br>
+    <div class="row"><a class="btn btn-outline-warning" href="/">Back to main...</a></div>
+  </div>
+
+<%- include('footer'); -%>

@@ -1,0 +1,24 @@
+<%- include('header'); -%>
+
+  <div class="container">
+    <div class="row dashboard-welcome"><h1>Hello there <%= user %>, it's good to have you back.</h1></div>
+    <div class="row"><h2><%= `${dt.day}.${dt.month}.${dt.year}` %></h2></div>
+
+    <div class="row dashboard-buttons d-flex justify-content-between">
+      <div class="col-2 new-note"><a class="btn btn-secondary" href="/note">New Note:</a></div>
+      <div class="col-2 sort btn btn-secondary">Sort</div>
+    </div>
+
+    <div class="row last-note-header"><h3>Last Created Note:</h3></div>
+    <div class="row last-note">
+      <a class="link-last-note" href="/note/<%= note.id %>">
+      <h2><%= note.identifier %> | <%= note.title %></h2>
+      <p><%= note.content %></p>
+      </a>
+    </div>
+    <div class="row dashboard-tags"><a href="/notes">All Notes</a>
+      <!-- supposed to "show notes for tags", but for now display all notes -->
+    </div>
+  </div>
+     
+<%- include('footer'); -%>

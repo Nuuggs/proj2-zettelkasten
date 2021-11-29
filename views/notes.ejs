@@ -1,0 +1,16 @@
+<%- include('header'); -%>
+
+<div class="container">
+  
+  <% notesArray.forEach(note => { %> 
+    <div class="row note-div">
+      <a class="note" href="/note/<%= note.id %>">
+      <h2><%= note.identifier %> | <%= note.title %></h2>
+      <p><%= note.content %></p>
+      </a>
+    </div>  
+  <% }); %>
+    <div class="row"><a class="btn btn-outline-warning" href="/">Back to dashboard...</a></div>
+</div>
+
+<%- include('footer'); -%>

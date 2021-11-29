@@ -1,0 +1,126 @@
+*:focus {
+  outline: none;
+}
+
+.color-palatte {
+  color-scheme: #FBF46D, #B4FE98, #77E4D4, #998CEB;
+}
+
+body {
+  background-color: #FBF46D;
+}
+
+p {
+  font-family: Tahoma;
+  font-size: 18px;
+}
+
+label {
+  font-weight: 600;
+}
+
+a {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: black;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 34px;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+input {
+  width:  100%;
+}
+
+input, textarea {
+  border: none;
+  padding: 0 10px;
+  margin: 0;
+  width: 100%;
+  background-color: #B4FE98;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.container {
+  margin-top: 30px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+}
+
+.btn {
+  width: 60%
+}
+
+.row {
+  margin-top: 10px;
+}
+
+.dashboard-welcome {
+  margin-top: 30px;
+}
+
+.last-note-header {
+  text-align: left;
+}
+
+.last-note {
+  background-color: #B4FE98;
+  margin-bottom: 20px;
+}
+
+.dashboard-tags {
+  background-color: #998CEB;
+
+}
+
+.note-div {
+  background-color: #77E4D4;
+}
+
+.note-div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.new-note, .sort {
+  width: 40%
+}
+
+
+#identifier {
+  color: rgb(161, 159, 159);
+  font-weight: 400;
+  font-size: 16px;
+  padding: 5px;
+}
+
+#title {
+  font-size: 30px;
+  font-weight: 650;
+  padding: 10px;
+}
+
+#content {
+  height: 200px;
+  padding: 10px;
+}

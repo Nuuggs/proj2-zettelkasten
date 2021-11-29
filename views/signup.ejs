@@ -1,0 +1,22 @@
+<%- include('header'); -%>
+
+  <div class="container">
+    <div class="row"><h1>New User?</h1></div>
+    <div class="row">
+      <p>It's great to see you!</p>
+    </div>
+    <div class="row">
+      <form action="/signup" method="POST">
+        <label for="username">Enter username here:</label><br>
+        <input type="text" id="username" name="username" required /><br>
+        <label for="password">Enter password here:</label><br>
+        <input type="password" id="password" name="password" required /><br><br>
+        <input type="submit" value="Sign Up!" />
+      </form>
+    </div>
+    <br>
+    <br>
+    <div class="row"><a class="btn btn-outline-warning" href="/">Back to main...</a></div>
+  </div>
+
+<%- include('footer'); -%>

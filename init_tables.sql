@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username TEXT,
+  password TEXT,
+  created_at TIMSTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS notes (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  identifier TEXT NOT NULL UNIQUE,
+  title TEXT,
+  content TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS note_links (
+  id SERIAL PRIMARY KEY,
+  note_id INTEGER,
+  link_id INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS notes_tags (
+  id SERIAL PRIMARY KEY,
+  note_id INTEGER,
+  tag_id INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS tags (
+  id SERIAL PRIMARY KEY,
+  tag_name TEXT
+);
