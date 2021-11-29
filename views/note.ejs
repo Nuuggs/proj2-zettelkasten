@@ -1,23 +1,24 @@
 <%- include('header'); -%>
 
   <div class="container">
-    <div class="row"><h1>display random quote?</h1></div>
+    <!-- <div class="row"><h1>display random quote?</h1></div> -->
     <div class="row">
-      <form action="/note/<%= id %>?_method=DELETE" method="POST">
-        <input class="btn btn-danger" type="submit" value="Delete?" />
-      </form>
+      <a class="btn btn-danger" href="/note/<%= id %>/delete" id="note-delete">X</a>
     </div>
     <div class="row">
       <form action="/note/:id" method="POST">
         <input type="text" id="identifier" name="identifier" value="<%= identifier %>" required /><br>
         <input type="text" id="title" name="title" value="<%= title %>" required /><br>
         <textarea id="content" name="content" placeholder="content" rows=12 cols=60><%= content %></textarea><br>
-        <input type="text" id="tags" name="tags" value="Tags" /><br>
+        <% tags.forEach(tag => { %>
+          <span><a href='/notes/<%= tag.tag_name %>'><%= tag.tag_name %></a></span>
+        <% }) %>
+        <input type="text" id="tag" name="tag" placeholder="Tag Input (only 1)" /><br>
         <input type="text" id="links" name="links" value="links" /><br>
         <!-- Use CSS to block out this... this is for the POST form-->
         <input type="number" id="note_id" name="note_id" value="<%= id %>" hidden /><br>
         <!-- to block out... used 'hidden' attribute instead! -->
-        <input type="submit" value="Update!" />
+        <input type="submit" id="update-button" value="Update!" />
       </form>
     </div>
     <br>

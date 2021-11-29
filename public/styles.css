@@ -40,13 +40,22 @@ h3 {
 input {
   width:  100%;
 }
-
-input, textarea {
+form {
+  background-color: #B4FE98;
+}
+input, textarea, span {
   border: none;
   padding: 0 10px;
   margin: 0;
   width: 100%;
   background-color: #B4FE98;
+}
+
+span {
+  background-color: #77E4D4;
+  padding: 10px;
+  margin: auto;
+  width: 50%;
 }
 
 .row {
@@ -106,6 +115,13 @@ input, textarea {
   width: 40%
 }
 
+#logout {
+  min-width: fit-content;
+}
+
+#navicon {
+  background-color: white;
+}
 
 #identifier {
   color: rgb(161, 159, 159);
@@ -121,6 +137,22 @@ input, textarea {
 }
 
 #content {
-  height: 200px;
+  height: 400px;
   padding: 10px;
+}
+
+#note-delete {
+  position: absolute;
+  max-width: fit-content;
+  right: 18vw;
+  margin-top: 20px;
+  margin-bottom: 0;
+  
+}
+
+#update-button {
+  background-color: #998CEB;
+  max-width: fit-content;
+  border-radius: 30%;
+  margin-bottom: 20px;
 }
