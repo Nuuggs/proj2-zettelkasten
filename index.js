@@ -1,7 +1,6 @@
 import pg from 'pg';
 import jsSHA from 'jssha';
 import { DateTime } from 'luxon';
-import { render } from 'ejs';
 
 // Initialize DB connection for SQL database
 const { Pool } = pg;
@@ -209,6 +208,9 @@ export const postNoteForm = (req, res) => {
     // Input Validation for tags
     console.log('select test result: ', result.rows[0]);
     if ( result.rows[0] === undefined ) {
+      if ( inputTag === '' ) {
+        return 'skip';
+      }
       return pool.query(`INSERT INTO tags (tag_name) VALUES ('${inputTag}') RETURNING id`);
     }
     else {
@@ -216,13 +218,16 @@ export const postNoteForm = (req, res) => {
     }
   })  
   .then((result) => {
+    console.log('looking for skip: ', result.rows)
+    if ( result.rows[0] === 'skip') {
+      return;
+    }
     tagId = result.rows[0].id;
     console.log('tag id:', tagId);
     // Input validations for notes_tags
     return pool.query(`INSERT INTO notes_tags (note_id, tag_id) VALUES ('${noteId}', '${tagId}') RETURNING *`);
   })
   .then((result) => {
-    console.log('note created: ', result.rows[0]);
     res.redirect(`/note/${result.rows[0].note_id}`);
   })
   .catch((error) => {
@@ -294,8 +299,6 @@ export const postNote = (req, res) => {
   
   const sqlQuery = `UPDATE notes SET identifier='${inputIdentifier}', title='${inputTitle}', content='${inputContent}' WHERE id=${noteId}`;
 
-  console.log('sql query: ', sqlQuery);
-
   pool
   .query(sqlQuery)
   .then((result) => {
@@ -307,6 +310,9 @@ export const postNote = (req, res) => {
     console.log('input tag: ', inputTag);
     console.log('selecting tag: ', result.rows[0]);
     if ( result.rows[0] === undefined ) {
+      if ( inputTag === '') {
+        return 'skip';
+      }
       return pool.query(`INSERT INTO tags (tag_name) VALUES ('${inputTag}') RETURNING id`);
     }
     else {
@@ -315,19 +321,26 @@ export const postNote = (req, res) => {
     
   })
   .then((result) => {
+    console.log('finding skip... ', result);
+    if ( result === 'skip' ) {
+      return 'skip';
+    }
     tagId = result.rows[0].id;
     console.log('tag id:', tagId);
     // Input validation for notes_tags
     return pool.query(`SELECT id FROM notes_tags WHERE note_id=${noteId} AND tag_id=${tagId}`)
   })
   .then((result) => {
+    if ( result === 'skip' ) {
+      return 'skip';
+    }
+
     if ( result.rows[0] === undefined) {
     return pool.query(`INSERT INTO notes_tags (note_id, tag_id) VALUES ('${noteId}', '${tagId}') RETURNING *`);
     }
     else {return;}
   })
   .then((result) => {
-    console.log('notes_tags created: ', result.rows[0]);
     res.redirect(`/note/${noteId}`);
   })
   .catch((error) => console.error(error.stack));      
@@ -367,8 +380,28 @@ export const getAllNotes = (req, res) => {
 
 }
 
+export const getAllTags = (req, res) => {
+  if (req.isUserLoggedIn === false) {
+    res.status(403).send('Sorry an error was detected, you are not logged in.<br> If issue persists, please contact support.<br><br><a href="/login">Try again</a>');     
+  }
+
+  const sqlQuery = 'SELECT * FROM tags ORDER BY id asc';
+  
+  pool.query(sqlQuery, (selectQueryError, selectQueryResult) => {
+    if( selectQueryError ) {
+      console.error('Select Query Note Id Error: ', selectQueryError);
+    }
+    
+    const tagsArray = selectQueryResult.rows;
+    const ejsObj = {tagsArray: tagsArray};
+    
+    // res.send('testing...');
+    res.render('tags', ejsObj);
+  })
+}
+
 export const getTagNotes = (req, res) => {
-  console.log('GET Request: /notes/:tag')
+  console.log('GET Request: /tags/:tag')
   
   if (req.isUserLoggedIn === false) {
     res.status(403).send('Sorry an error was detected, you are not logged in.<br> If issue persists, please contact support.<br><br><a href="/login">Try again</a>');     
@@ -397,6 +430,31 @@ export const getTagNotes = (req, res) => {
     })
 }
 
-export const deleteCategory = (req, res) => {
-  console.log('GET Request: /');
+export const deleteNoteTag = (req, res) => {
+  console.log('GET Request: /delete/:id/:tag/');
+  const noteId = req.params.id;
+  const tag = req.params.tag;
+
+  pool.query(`SELECT id from tags WHERE tag_name='${tag}'`)
+  .then((result) => {
+    const tagId = result.rows[0].id;
+    return pool.query(`DELETE FROM notes_tags WHERE note_id=${noteId} AND tag_id=${tagId}`)
+  })
+  .then((result) => res.redirect(`/note/${noteId}`))
+  .catch((error) => console.error(error));
+
+}
+
+export const deleteTag = (req, res) => {
+  console.log('GET Request: /tags/:tag/delete');
+
+  const tag = req.params.tag;
+
+  pool.query(`DELETE FROM tags WHERE tag_name='${tag}' returning id`)
+    .then((result) => {
+      const tagId = result.rows[0].id;
+      return pool.query(`DELETE FROM notes_tags WHERE tag_id=${tagId}`)
+    })
+    .then((result) => res.redirect('/tags'))
+    .catch((error) => console.error(error.stack));
 }

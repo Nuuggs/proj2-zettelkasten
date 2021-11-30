@@ -9,9 +9,14 @@
       <form action="/note/:id" method="POST">
         <input type="text" id="identifier" name="identifier" value="<%= identifier %>" required /><br>
         <input type="text" id="title" name="title" value="<%= title %>" required /><br>
-        <textarea id="content" name="content" placeholder="content" rows=12 cols=60><%= content %></textarea><br>
+        <textarea id="content" name="content" placeholder="content" rows=8 cols=60 maxlength=700><%= content %></textarea><br>
         <% tags.forEach(tag => { %>
-          <span><a href='/notes/<%= tag.tag_name %>'><%= tag.tag_name %></a></span>
+          <span>
+            <a href='/tags/<%= tag.tag_name %>'>
+              <%= tag.tag_name %>
+              <a class="btn btn-danger" id="tag-delete" href="/delete/<%= id %>/<%= tag.tag_name %>">X</a>
+            </a>
+          </span>
         <% }) %>
         <input type="text" id="tag" name="tag" placeholder="Tag Input (only 1)" /><br>
         <input type="text" id="links" name="links" value="links" /><br>

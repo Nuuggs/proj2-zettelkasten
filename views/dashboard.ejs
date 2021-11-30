@@ -4,9 +4,9 @@
     <div class="row dashboard-welcome"><h1>Hello there <%= user %>, it's good to have you back.</h1></div>
     <div class="row"><h2><%= `${dt.day}.${dt.month}.${dt.year}` %></h2></div>
 
-    <div class="row dashboard-buttons d-flex justify-content-between">
-      <div class="col-2 new-note"><a class="btn btn-secondary" href="/note">New Note:</a></div>
-      <div class="col-2 sort"><a class="btn btn-secondary" href="#">Sort</a></div>
+    <div class="row d-flex justify-content-between">
+      <a class="dashboard-tags" href="/note">New Note:</a>
+      <a class="dashboard-tags" href="/tags">All Tags</a>
     </div>
 
     <div class="row last-note-header"><h3>Last Created Note:</h3></div>
@@ -16,7 +16,9 @@
       <p><%= note.content %></p>
       </a>
     </div>
-    <div class="row dashboard-tags"><a href="/notes">All Notes</a>
+    <div class="row">
+      <a class="dashboard-tags" href="/notes">All Notes</a>
+      
       <!-- supposed to "show notes for tags", but for now display all notes -->
     </div>
   </div>

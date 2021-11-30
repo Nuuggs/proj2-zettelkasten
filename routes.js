@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { checkLogin, getLanding, getSignup, postSignup, getLogin, postLogin, getDashboard, getLogout, getNoteForm, postNoteForm, getNote, postNote, deleteNote, getAllNotes, getTagNotes, deleteCategory } from "./index.js"
+import { checkLogin, getLanding, getSignup, postSignup, getLogin, postLogin, getDashboard, getLogout, getNoteForm, postNoteForm, getNote, postNote, deleteNote, getAllNotes, getTagNotes, deleteNoteTag, getAllTags, deleteTag } from "./index.js"
 // ======================================== //
 // ===== ==== ===== Setup ===== ===== ===== //
 // ======================================== //
@@ -58,8 +58,10 @@ app.get('/note/:id', getNote);
 app.post('/note/:id', postNote);
 app.get('/note/:id/delete', deleteNote);
 app.get('/notes', getAllNotes);
-app.get('/notes/:tag', getTagNotes);
-app.get('/notes/:tag/delete', deleteCategory);
+app.get('/tags/:tag', getTagNotes);
+app.get('/delete/:id/:tag', deleteNoteTag);
+app.get('/tags', getAllTags);
+app.get('/tags/:tag/delete', deleteTag);
 
 // ======================================== //
 // ===== ===== ===== Port ===== ===== ===== //

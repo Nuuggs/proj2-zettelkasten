@@ -53,7 +53,9 @@ input, textarea, span {
 
 span {
   background-color: #77E4D4;
-  padding: 10px;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: 500;
   margin: auto;
   width: 50%;
 }
@@ -105,18 +107,33 @@ span {
   background-color: #77E4D4;
 }
 
-.note-div {
+.note-div, .last-note {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 15px;
+  border-style: solid;
+  border-radius: 10px;
 }
 
-.new-note, .sort {
-  width: 40%
+.tag-div {
+  border-style: double;
+  background-color: #998CEB;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.dashboard-tags {
+  width: 40%;
+  padding: 5px;
+  border-style: dashed;
+  border-radius: 20px;
+
 }
 
 #logout {
   min-width: fit-content;
+  max-width: fit-content + 10px;
 }
 
 #navicon {
@@ -137,7 +154,7 @@ span {
 }
 
 #content {
-  height: 400px;
+  height: 300px;
   padding: 10px;
 }
 
@@ -147,7 +164,13 @@ span {
   right: 18vw;
   margin-top: 20px;
   margin-bottom: 0;
-  
+}
+
+#tag-delete{
+  max-width: fit-content;
+  font-size: 8px;
+  padding: 5px 10px 5px 10px;
+  margin-left: 10px;
 }
 
 #update-button {
@@ -156,3 +179,15 @@ span {
   border-radius: 30%;
   margin-bottom: 20px;
 }
+
+#landing-form {
+  background-color: white;
+  border-style: solid;
+  padding: 20px;
+}
+
+#username, #password {
+  background-color: #FBF46D;
+  text-align: center;
+}
+

@@ -1,0 +1,16 @@
+<%- include('header'); -%>
+
+<div class="container">
+  
+  <% tagsArray.forEach(tag => { %> 
+    <div class="row tag-div">
+      <a class="note" href="/tags/<%= tag.tag_name %>">
+      <p><%= tag.tag_name %><a class="btn btn-danger" id="tag-delete" href="/tags/<%= tag.tag_name %>/delete">X</a>
+            </a></p>
+      </a>
+    </div>  
+  <% }); %>
+    <div class="row"><a class="btn btn-outline-warning" href="/">Back to dashboard...</a></div>
+</div>
+
+<%- include('footer'); -%>
