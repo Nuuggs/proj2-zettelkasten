@@ -1,7 +1,7 @@
 <%- include('header'); -%>
 
   <div class="container">
-    <div class="row"><h1>display random quote?</h1></div>
+    <!-- <div class="row"><h1>display random quote?</h1></div> -->
 
     <div class="row">
       <form action="/note" method="POST">
@@ -10,7 +10,7 @@
         <textarea id="content" name="content" placeholder="content" rows=12 cols=60></textarea><br>
         <input type="text" id="tag" name="tag" placeholder="Tag" /><br>
         <input type="text" id="links" name="links" placeholder="Links (disabled)" disabled /><br><br>
-        <input type="submit" value="Create!" />
+        <input type="submit" id="update-button" value="Create!" />
       </form>
     </div>
     <br>
