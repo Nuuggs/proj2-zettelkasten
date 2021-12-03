@@ -1,0 +1,12 @@
+Code Review Notes from Michelle and Mike
+
+Good points 
+- Code is very clean. Variable and Function Naming is clear and consistent.
+- Good handling of Promises and queries. 
+- postNoteForm functionality is very well done. it handles consecutive promises in a very organized way. error checking is present.
+
+
+Points to improve
+- Add more comments, especially in the longer functions (e.g. postNoteForm), to describe the thinking behind the main steps in the function.
+- normally, index.js contains all the app.get(...), and routes.js contains the route callbacks. yours are reversed. :D 
+- include planning docs (ERD, user flow, wireframes) in a /planning_docs folder in the repo.
