@@ -1,0 +1,34 @@
+  // ======================================== //
+  // ===== ==== ===== Routes ===== ==== ===== //
+  // ======================================== //
+
+  // ----- Landing Page ----- //
+  // app.get('/', getLanding);
+
+  // ----- Sign Up ----- //
+  // app.get('/signup', getSignup);
+  // app.post('/signup', postSignup);
+
+  // ----- Log In ----- //
+  // app.get('/login', getLogin);
+  // app.post('/login', postLogin);
+
+  // ----- Dashboard ----- //
+  // app.get('/dashboard/:user', getDashboard);
+
+  // ----- Log Out ----- //
+  // app.get('/logout', getLogout);
+
+  // ----- Note ----- //
+  // app.get('/note/all', getAllNotes);
+  // app.get('/note/:id/:tag/delete', deleteNoteTag);
+  // app.get('/note/:id/delete', deleteNote);
+  // app.get('/note/:id', getNote);
+  // app.post('/note/:id', postNote);
+  // app.get('/note', getNoteForm);
+  // app.post('/note', postNoteForm);
+
+  // ----- Tag ----- //
+  // app.get('/tags/:tag/delete', deleteTag);
+  // app.get('/tags/:tag', getTagNotes);
+  // app.get('/tags', getAllTags);

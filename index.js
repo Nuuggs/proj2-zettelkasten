@@ -1,16 +1,8 @@
 import express from 'express';
-
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
-import { checkLogin, getLanding, getSignup, postSignup, getLogin, postLogin, getDashboard, getLogout, getNoteForm, postNoteForm, getNote, postNote, deleteNote, getAllNotes, getTagNotes, deleteNoteTag, getAllTags, deleteTag } from "./routes.js"
-// ======================================== //
-// ===== ==== ===== Setup ===== ===== ===== //
-// ======================================== //
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import bindRoutes from './routes.mjs';
 
 // Initialize express
 const app = express();
@@ -18,7 +10,9 @@ const app = express();
 // Set view engine
 app.set('view engine', 'ejs');
 
-app.use(express.static(join(__dirname, 'public')));
+// Expose the files stored in the public folder
+app.use(express.static('public'));
+
 // For request.body for post requests
 app.use(express.urlencoded({ extended: false }));
 
@@ -28,42 +22,7 @@ app.use(methodOverride('_method'));
 // Cookie Parser
 app.use(cookieParser());
 
-// ======================================== //
-// ===== ==== ===== Routes ===== ==== ===== //
-// ======================================== //
-app.use(checkLogin);
+bindRoutes(app);
 
-// ----- Landing Page ----- //
-app.get('/', getLanding);
-
-// ----- Sign Up ----- //
-app.get('/signup', getSignup);
-app.post('/signup', postSignup);
-
-// ----- Log In ----- //
-app.get('/login', getLogin);
-app.post('/login', postLogin);
-
-
-// ----- Dashboard ----- //
-app.get('/dashboard/:user', getDashboard);
-
-// ----- Log Out ----- //
-app.get('/logout', getLogout);
-
-// ----- Note ----- //
-app.get('/note', getNoteForm);
-app.post('/note', postNoteForm);
-app.get('/note/:id', getNote);
-app.post('/note/:id', postNote);
-app.get('/note/:id/delete', deleteNote);
-app.get('/notes', getAllNotes);
-app.get('/tags/:tag', getTagNotes);
-app.get('/delete/:id/:tag', deleteNoteTag);
-app.get('/tags', getAllTags);
-app.get('/tags/:tag/delete', deleteTag);
-
-// ======================================== //
-// ===== ===== ===== Port ===== ===== ===== //
-// ======================================== //
-app.listen(3004);
+const PORT = process.env.PORT || 3004;
+app.listen(PORT);

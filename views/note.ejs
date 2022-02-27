@@ -14,7 +14,7 @@
           <span>
             <a href='/tags/<%= tag.tag_name %>'>
               <%= tag.tag_name %>
-              <a class="btn btn-danger" id="tag-delete" href="/delete/<%= id %>/<%= tag.tag_name %>">X</a>
+              <a class="btn btn-danger" id="tag-delete" href="/note/<%= id %>/<%= tag.tag_name %>/delete">X</a>
             </a>
           </span>
         <% }) %>
